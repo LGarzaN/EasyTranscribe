@@ -1,13 +1,56 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+from word import word
+import os
+import gpt as g
 
 app = Flask(__name__)
 
+query = ""
+msg = "Loading..."
+
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/", methods=["POST", "GET"])
 def index():
+    global query
     if request.method == "POST":
-        file = request.form["file"]
+        uploaded_file = request.files['file']
+
+        filename = uploaded_file.filename
+        file_extension = os.path.splitext(filename)[1].lower()
+
+        if file_extension == '.docx':
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+            uploaded_file.save(file_path)
+
+            query = word(file_path)
+
+            return redirect(url_for("chat"))
+
     return render_template("index.html")
+
+@app.route("/chat", methods=["GET", "POST"])
+def chat():
+    global query
+    g.start()
+    summary = "Loading..."
+    if request.method == "POST":
+        data = request.json.get("message")  # Access the message from the request
+        summary = g.normal(data)
+
+        return jsonify(response=summary)
+    
+    else:
+        summary = g.summary(query)
+        return render_template("Chat.html", msg=summary)
+
+
+
+    
+
+
+
 
 
 if __name__ == "__main__":

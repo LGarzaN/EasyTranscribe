@@ -5,10 +5,13 @@
         <title>Transcriptify</title>
     </head>
     <body>
-        <div>
-            
+        <div id="loading-overlay">
+            <div id="loading-modal">
+                <img src="/static/images/loading.gif" style="width: 15%; height: 50%;">
+                <!-- You can add a loading animation here if desired -->
+            </div>
         </div>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="center">
                 <h1 class="title">Transcriptify</h1>
             </div>
@@ -17,7 +20,7 @@
                 into easily digestible and accessible text-based content. You can upload a file or chat directly with an AI.</p>
             </div>
             <div class="buttons">
-                <input type="file" id="archivoInput" accept=".jpg, .png, .mp3, .pdf, .docx, .txt" required> <button type="submit" class="indexButtons" onclick="detectarTipoDeArchivo()" style="float: left;">Upload file</button> <button class="indexButtons" style="float: right;">ChatBot</button>
+                <input type="file" id="archivoInput" accept=".jpg, .png, .mp3, .pdf, .docx, .txt" required name="file"> <button type="submit" class="indexButtons" onclick="detectarTipoDeArchivo()" style="float: left;">Upload file</button> <button class="indexButtons" style="float: right;">ChatBot</button>
             </div>
         </form>
 
@@ -29,44 +32,19 @@
                 const archivo = archivoInput.files[0];
     
                 if (archivo) {
-                    alert("Archivo aceptado");
-                    location.href = "www.google.com";
+                    showLoadingModal();
                 } else {
                     alert("Archivo NO aceptado");
                 }
             }
+            function showLoadingModal() {
+                document.getElementById("loading-overlay").style.display = "block";
+            }
 
-            const button = document.querySelector("button"),
-            toast = document.querySelector(".toast");
-            (closeIcon = document.querySelector(".close")),
-            (progress = document.querySelector(".progress"));
+            function hideLoadingModal() {
+                document.getElementById("loading-overlay").style.display = "none";
+            }
 
-            let timer1, timer2;
-
-            button.addEventListener("click", () => {
-            toast.classList.add("active");
-            progress.classList.add("active");
-
-            timer1 = setTimeout(() => {
-                toast.classList.remove("active");
-            }, 5000); //1s = 1000 milliseconds
-
-            timer2 = setTimeout(() => {
-                progress.classList.remove("active");
-            }, 5300);
-            });
-
-            closeIcon.addEventListener("click", () => {
-            toast.classList.remove("active");
-
-            setTimeout(() => {
-                progress.classList.remove("active");
-            }, 300);
-
-            clearTimeout(timer1);
-            clearTimeout(timer2);
-            });
-            
         </script>    
     </body>
 </html>
