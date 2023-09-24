@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/templates/css/style.css">
+        <title>Transcriptify</title>
+    </head>
+    <body>
+        <div>
+            <h3></h3>
+        </div>
+        <div class="center">
+            <h1 class="title">Transcriptify</h1>
+        </div>
+        <div style="width: 75%; margin: auto; margin-top: 5%; margin-bottom: 5%;">
+            <p class="text">An all-in-one solution for converting diverse media formats, including audio, video, and images
+             into easily digestible and accessible text-based content. You can upload a file or chat directly with an AI.</p>
+        </div>
+        <div class="buttons">
+            <input type="file" id="archivoInput" accept=".jpg, .png, .mp3, .pdf, .docx, .txt" required> <button class="indexButtons" onclick="detectarTipoDeArchivo()" style="float: left;">Upload file</button> <button class="indexButtons" style="float: right;">ChatBot</button>
+        </div>
+
+
+        <script>
+            function detectarTipoDeArchivo() {
+                const archivoInput = document.getElementById("archivoInput");
+    
+                const archivo = archivoInput.files[0];
+    
+                if (archivo) {
+                    alert("Archivo aceptado");
+                    location.href = "www.google.com";
+                } else {
+                    alert("Archivo NO aceptado");
+                }
+            }
+            
+        </script>    
+    </body>
+</html>

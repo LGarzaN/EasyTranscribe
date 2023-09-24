@@ -1,1 +1,3 @@
 # EasyTranscribe
+
+pip install flask
