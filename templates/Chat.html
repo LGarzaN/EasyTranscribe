@@ -3,72 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project - Chat</title>
-    <style>
-        body {
-            margin: 10%;
-            margin-top: 4%;
-            margin-bottom: 0;
-            background-color: #c4c4d1;
-            font-family: 'Noto Sans KR', Arial, sans-serif;
-        }
-        #chat-container {
-            width: 90% !important;
-            height: 450px;
-            background-color: #fff !important;
-            margin: 0 auto;
-            padding: 3%;
-            border: 1% solid #ccc;
-            border-radius: 1%;
-            overflow-y: scroll;
-            font-size: 18px;
-        }
-        #chat-messages {
-            word-wrap: break-word; /* Dividir palabras largas */
-        }
-        #message-input-container {
-            display: flex;
-            align-items: center;
-        }
-        #message-input {
-            flex: 1;
-            background-image: url('/static/images/chat-icon.png');
-            background-repeat: no-repeat;
-            background-position: calc(100% - 30px) center; /* Ajusta la posición de fondo aquí */
-            background-size: 30px 30px; /* Ajusta el tamaño de la imagen aquí */
-
-            width: 90% !important;
-            border-radius: 10px;
-            padding-top: 1.5%;
-            padding-bottom: 1.5%;
-            padding-left: 3%;
-            padding-right: 70px; /* Ajusta el padding-right para acomodar el espacio en blanco transparente */
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 3%;
-        }
-
-        #message-input {
-            width: 95%;
-            border-radius: 10px;
-            padding-top: 1.5%;
-            padding-bottom: 1.5%;
-            padding-left: 5%;
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 3%;
-        }
-
-        .message {
-            margin-bottom: 1.5%;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_chat.css') }}">
+    <title>Transcriptify-Chat</title>
 </head>
 <body>
+    <div id="summary-container" data-msg="{{ msg }}"></div>
     <div id="chat-container">
         <div id="chat-messages"></div>
     </div>
-    <input type="text" id="message-input" placeholder="Make a question..." onkeyup="sendMessage(event)">
+    <input type="text" id="message-input" placeholder="Ask a question..." onkeyup="sendMessage(event)">
+    <div>
+        <a href="/" class="indexButtons">Back...</a>
+    </div>
+</head>
     <script>
         const chatMessages = document.getElementById("chat-messages");
         const messageInput = document.getElementById("message-input");
