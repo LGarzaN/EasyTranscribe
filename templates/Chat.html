@@ -7,20 +7,32 @@
     <title>Transcriptify-Chat</title>
 </head>
 <body>
+    <div>
+        <a href="/" class="indexButtons">Back</a>
+    </div>
+    <div id="loading-overlay">
+        <div id="loading-modal">
+            <img src="/static/images/loading.gif" style="width: 10%; height: 50%;">
+            <!-- You can add a loading animation here if desired -->
+        </div>
+    </div>
     <div id="summary-container" data-msg="{{ msg }}"></div>
     <div id="chat-container">
         <div id="chat-messages"></div>
     </div>
-    <input type="text" id="message-input" placeholder="Ask a question..." onkeyup="sendMessage(event)">
-    <div>
-        <a href="/" class="indexButtons">Back...</a>
+    <div id="message-input-container">
+        <input type="text" id="message-input" placeholder="Ask a question..." onkeyup="sendMessage(event)">
+        <button id="message-button" onclick="sendMessage(event)">
+            <img src="/static/images/chat-icon.png" alt="Chat Icon" style="width: 30px; height: 30px;">
+        </button>
     </div>
-</head>
+    
     <script>
         const chatMessages = document.getElementById("chat-messages");
         const messageInput = document.getElementById("message-input");
         var sum, words, idea;
-    
+        showLoadingModal()
+        
         fetch("/send_dict")
             .then(response => response.json())
             .then(data => {
@@ -29,15 +41,21 @@
                 var words = data.words;
                 var ideas = data.ideas;
 
-                // Update the page with the loaded data
-                addMessage("ChatGPT", words)
-                // Update other parts of the page as needed
+                for (const key in words) {
+                    if (words.hasOwnProperty(key)) {
+                        const value = words[key];
+                        console.log(`Key: ${key}, Value: ${value}`);
+                    }
+                }
+
+                hideLoadingModal();
+
+                addMessage("ChatGPT", summary)
+                
             })
             .catch(error => {
                 console.error("Error:", error);
         });
-
-        window.onload = addMessage("ChatGPT", "Loading...")
 
         function sendMessage(event) {
             if (event.key === "Enter" && messageInput.value.trim() !== "") {
@@ -80,6 +98,15 @@
             chatMessages.appendChild(messageElement);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
+
+        function showLoadingModal() {
+                document.getElementById("loading-overlay").style.display = "block";
+            }
+
+        function hideLoadingModal() {
+            document.getElementById("loading-overlay").style.display = "none";
+        }
+
     </script>
 </body>
 </html>

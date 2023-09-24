@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from word import word
+from imges import image
+from pdf import pdf
+import speech
 import os
 import gpt as g
 
@@ -26,6 +29,38 @@ def index():
             uploaded_file.save(file_path)
 
             query = word(file_path)
+
+            return redirect(url_for("chat"))
+        
+        elif file_extension == '.jpg' or file_extension == '.png' or file_extension == '.jpeg':
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+            uploaded_file.save(file_path)
+
+            query = image(file_path)
+
+            return redirect(url_for("chat"))
+        
+        elif file_extension == '.pdf':
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+            uploaded_file.save(file_path)
+
+            query = pdf(file_path)
+
+            return redirect(url_for("chat"))
+        
+        elif file_extension == '.mp3':
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+            uploaded_file.save(file_path)
+
+            query = speech.mp3(file_path)
+
+            return redirect(url_for("chat"))
+        
+        elif file_extension == '.mp4':
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+            uploaded_file.save(file_path)
+
+            query = speech.mp4(file_path)
 
             return redirect(url_for("chat"))
 

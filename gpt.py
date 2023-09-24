@@ -43,7 +43,7 @@ def frequentWords(text):
     )
     chatbot = Chatbot(
         model=model,
-        description="From the following text, which are the 5 most commonly repeated phrases? Prepositions, Nouns, Adverbs, conjunctions and pronouns are not considered phrases. Answer only with the phrase separated by a space and then the amount of times that phrase was repeated. give me the list in json format",
+        description="From the following text, which are the 5 most commonly repeated phrases? Prepositions, Nouns, Adverbs, conjunctions and pronouns are not considered phrases. Answer only with the phrase separated by a space and then the amount of times that phrase was repeated. give me the list in python dictionary format",
         verbose=False,
     )
 
