@@ -1,5 +1,5 @@
 body{
-    background-image: url('/templates/images/bg3.png');
+    background-image: url('../images/bg3.png');
     background-size: cover;
 }
 
@@ -48,8 +48,8 @@ body{
     background-color: #DA4B76;
     color: white;
     border-radius: 15px;
-    width: 16%;
-    height: 50px;
-    font-size: 20px;
+    width: 19%;
+    height: 55px;
+    font-size: 24px;
 }
 
