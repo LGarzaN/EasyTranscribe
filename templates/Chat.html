@@ -65,7 +65,6 @@
     </style>
 </head>
 <body>
-    <div id="summary-container" data-msg="{{ msg }}"></div>
     <div id="chat-container">
         <div id="chat-messages"></div>
     </div>
@@ -73,9 +72,25 @@
     <script>
         const chatMessages = document.getElementById("chat-messages");
         const messageInput = document.getElementById("message-input");
-        var msg = document.getElementById("summary-container").getAttribute("data-msg");
-        
-        window.onload = addMessage("ChatGPT", msg)
+        var sum, words, idea;
+    
+        fetch("/send_dict")
+            .then(response => response.json())
+            .then(data => {
+                // Process and use the data as needed
+                var summary = data.summary;
+                var words = data.words;
+                var ideas = data.ideas;
+
+                // Update the page with the loaded data
+                addMessage("ChatGPT", words)
+                // Update other parts of the page as needed
+            })
+            .catch(error => {
+                console.error("Error:", error);
+        });
+
+        window.onload = addMessage("ChatGPT", "Loading...")
 
         function sendMessage(event) {
             if (event.key === "Enter" && messageInput.value.trim() !== "") {
@@ -98,6 +113,8 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ "message": message})
+
+                
             })
             .then(response => response.json())
             .then(data => {

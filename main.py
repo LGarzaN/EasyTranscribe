@@ -3,6 +3,7 @@ from word import word
 import os
 import gpt as g
 
+
 app = Flask(__name__)
 
 query = ""
@@ -32,25 +33,31 @@ def index():
 
 @app.route("/chat", methods=["GET", "POST"])
 def chat():
-    global query
+    global query, msg
     g.start()
     summary = "Loading..."
     if request.method == "POST":
         data = request.json.get("message")  # Access the message from the request
         summary = g.normal(data)
-
+        
         return jsonify(response=summary)
     
     else:
-        summary = g.summary(query)
-        return render_template("Chat.html", msg=summary)
-
-
-
+        return render_template("Chat.html")
     
+@app.route("/send_dict", methods=["GET"])
+def send_dict():
+    global query
+    summary = g.normal(query)
+    frequentWords = g.frequentWords(query)
+    ideas = g.keyIdeas(query)
 
-
-
+    dic = {
+        "summary": summary,
+        "words": frequentWords,
+        "ideas": ideas
+    }
+    return jsonify(dic)
 
 
 if __name__ == "__main__":
